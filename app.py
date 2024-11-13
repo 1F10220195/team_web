@@ -1,11 +1,16 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'your_secret_key'  # セッションやフラッシュメッセージ用の秘密鍵
+
+# データベースのURI設定（instanceフォルダ内のデータベースファイルを指定）
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = True  # SQLログの出力を有効にする（デバッグ用）
 db = SQLAlchemy(app)
 
 # ユーザーモデルの定義
@@ -24,10 +29,10 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        hashed_password = generate_password_hash(password, method='sha256')
-        
+        hashed_password = generate_password_hash(password)  # デフォルトで pbkdf2:sha256
+
         new_user = User(username=username, password=hashed_password)
-        
+
         try:
             db.session.add(new_user)
             db.session.commit()
@@ -71,4 +76,7 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
+    # Flaskのインスタンスフォルダがない場合は作成
+    if not os.path.exists(app.instance_path):
+        os.makedirs(app.instance_path)
     app.run(debug=True)
