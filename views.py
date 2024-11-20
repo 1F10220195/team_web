@@ -1,4 +1,3 @@
-"""
 import openai
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -27,4 +26,3 @@ def chat_with_gpt(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
-"""
