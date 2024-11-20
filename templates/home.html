@@ -6,6 +6,38 @@
 </head>
 <body>
     <h1>ようこそ！ログインしました。</h1>
+    <div>
+        <input type="text" id="userMessage" placeholder="質問を入力してください...">
+        <button onclick="sendMessage()">送信</button>
+    </div>
+        <div id="chatResponse"></div>
+    
+        <script>
+            function sendMessage() {
+                const message = document.getElementById('userMessage').value;
+    
+                fetch('/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const responseDiv = document.getElementById('chatResponse');
+                    if (data.response) {
+                        responseDiv.innerText = data.response;
+                    } else if (data.error) {
+                        responseDiv.innerText = 'エラー: ' + data.error;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('chatResponse').innerText = 'エラーが発生しました。';
+                });
+            }
+        </script>
     <p><a href="/logout">ログアウト</a></p>
 </body>
 </html>
