@@ -89,6 +89,15 @@ def logout():
     flash('ログアウトしました。')
     return redirect(url_for('login'))
 
+@app.route('/health', methods=['GET', 'POST'])
+def health():
+    if 'user_id' in session:
+        return render_template('health.html')
+    else:
+        flash('ログインしてください。')
+        return redirect(url_for('login'))
+
+
 if __name__ == "__main__":
     # Flaskのインスタンスフォルダがない場合は作成
     if not os.path.exists(app.instance_path):
