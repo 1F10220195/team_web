@@ -23,6 +23,20 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+@app.route('/', methods=['GET', 'POST'])
+def main():
+    if request.method == 'POST':
+        # フォームや特定の操作に対応（ここでは特に何もしない）
+        return redirect(url_for('register'))  # POST時に/registerにリダイレクト
+
+    # GETリクエスト時のHTMLレスポンス
+    return '''
+        <h1>ようこそ！</h1>
+        <form action="/register" method="get">
+            <button type="submit">登録ページへ</button>
+        </form>
+    '''
+
 # 登録ページ
 @app.route('/register', methods=['GET', 'POST'])
 def register():
