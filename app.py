@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'your_secret_key'  # セッションやフラッシュメッセージ用の秘密鍵
 
@@ -26,10 +25,7 @@ with app.app_context():
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
-        # フォームや特定の操作に対応（ここでは特に何もしない）
         return redirect(url_for('register'))  # POST時に/registerにリダイレクト
-
-    # GETリクエスト時のHTMLレスポンス
     return '''
         <h1>ようこそ！</h1>
         <form action="/register" method="get">
@@ -43,7 +39,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        hashed_password = generate_password_hash(password)  # デフォルトで pbkdf2:sha256
+        hashed_password = generate_password_hash(password)
 
         new_user = User(username=username, password=hashed_password)
 
@@ -82,14 +78,8 @@ def home():
         flash('ログインしてください。')
         return redirect(url_for('login'))
 
-# ログアウト
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    flash('ログアウトしました。')
-    return redirect(url_for('login'))
-
-@app.route('/health', methods=['GET', 'POST'])
+# 新しいルート: health.htmlを表示するルート
+@app.route('/health')
 def health():
     if 'user_id' in session:
         return render_template('health.html')
@@ -97,9 +87,14 @@ def health():
         flash('ログインしてください。')
         return redirect(url_for('login'))
 
+# ログアウト
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('ログアウトしました。')
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
-    # Flaskのインスタンスフォルダがない場合は作成
     if not os.path.exists(app.instance_path):
         os.makedirs(app.instance_path)
     app.run(debug=True)
