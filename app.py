@@ -1,7 +1,10 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from langchain_community.chat_models import ChatOpenAI
+from langchain.schema import HumanMessage
+
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'your_secret_key'  # セッションやフラッシュメッセージ用の秘密鍵
@@ -21,6 +24,35 @@ class User(db.Model):
 # データベースの初期化
 with app.app_context():
     db.create_all()
+
+chat = ChatOpenAI(
+    openai_api_key='84Wr7FR0h14mT3k90dHAtUu7fIHdz8EgkKfnixMCg0QvOK6QcRvAlCk16mSNZtznQTTgta7AXKeCyKMzQNGZ4_g',
+    openai_api_base='https://api.openai.iniad.org/api/v1',
+    model_name='gpt-4o-mini',
+    temperature=0
+)
+
+# ホーム画面ルート
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# APIルート
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    # ユーザー入力を取得
+    food_input = request.json.get("food_input", "")
+    
+    # ChatGPTにクエリを送信
+    messages = [HumanMessage(content=f"{food_input}を食べました。不足する栄養素と補う食品、料理の例を教えてください。")]
+    result = chat(messages)
+    
+    # 結果を返す
+    return jsonify({"result": result.content})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -97,4 +129,34 @@ def logout():
 if __name__ == "__main__":
     if not os.path.exists(app.instance_path):
         os.makedirs(app.instance_path)
+    app.run(debug=True)
+
+
+# ChatGPTモデルの初期化
+chat = ChatOpenAI(
+    openai_api_key='TAnfI5vjPCNH8aUBGFXT1M8g2zj9MtiV1ILIUv8MOoEfO0k5nSSYq7qM90-XayBK0E0vxuS8RZHoDNzlAWOeTdA',
+    openai_api_base='https://api.openai.iniad.org/api/v1',
+    model_name='gpt-4',
+    temperature=0
+)
+
+# ホーム画面ルート
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# APIルート
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    # ユーザー入力を取得
+    food_input = request.json.get("food_input", "")
+    
+    # ChatGPTにクエリを送信
+    messages = [HumanMessage(content=f"{food_input}を食べました。不足する栄養素と補う食品、料理の例を教えてください。")]
+    result = chat(messages)
+    
+    # 結果を返す
+    return jsonify({"result": result.content})
+
+if __name__ == '__main__':
     app.run(debug=True)
