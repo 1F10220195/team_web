@@ -25,6 +25,27 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+chat = ChatOpenAI(
+    openai_api_key='84Wr7FR0h14mT3k90dHAtUu7fIHdz8EgkKfnixMCg0QvOK6QcRvAlCk16mSNZtznQTTgta7AXKeCyKMzQNGZ4_g',
+    openai_api_base='https://api.openai.iniad.org/api/v1',
+    model_name='gpt-4o-mini',
+    temperature=0
+)
+
+# APIルート
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    # ユーザー入力を取得
+    food_input = request.json.get("food_input", "")
+    
+    # ChatGPTにクエリを送信
+    messages = [HumanMessage(content=f"{food_input}を食べました。不足する栄養素と補う食品、料理の例を教えてください。")]
+    result = chat(messages)
+    
+    # 結果を返す
+    return jsonify({"result": result.content})
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])
