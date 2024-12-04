@@ -9,23 +9,23 @@
     <h1>ようこそ！ログインしました。</h1>
     <div>
         <input type="text" id="userMessage" placeholder="質問を入力してください...">
-        <button id="analyzeButton">送信</button>
-        <div id="result"></div>
+        <button id="Button">送信</button>
+        <div id="result_2"></div>
 
     </div>
     
-        <script>
-            document.getElementById("analyzeButton").addEventListener("click", async () => {
-                const userMessage = document.getElementById("userMessage").value;
-                const response = await fetch("/analyze", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ food_input: userMessage })
-                });
-                const data = await response.json();
-                document.getElementById("result").innerText = data.result;
+    <script>
+        document.getElementById("Button").addEventListener("click", async () => {
+            const userMessage = document.getElementById("userMessage").value;
+            const response = await fetch("/analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ word_input: userMessage })
             });
-        </script>
+            const data = await response.json();
+            document.getElementById("result_2").innerText = data.result_2;
+        });
+    </script>
     <p><a href="/health">健康管理ページに移動</a></p>
     <p><a href="/advice">栄養素アドバイス（仮）に移動</a></p>
     <p><a href="/logout">ログアウト</a></p>

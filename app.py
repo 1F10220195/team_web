@@ -36,14 +36,31 @@ chat = ChatOpenAI(
 @app.route('/analyze', methods=['POST'])
 def analyze():
     # ユーザー入力を取得
-    food_input = request.json.get("food_input", "")
-    
-    # ChatGPTにクエリを送信
-    messages = [HumanMessage(content=f"{food_input}を食べました。不足する栄養素と補う食品、料理の例を教えてください。")]
-    result = chat(messages)
-    
+    food_input = request.json.get("food_input", "").strip()
+    word_input = request.json.get("word_input", "").strip()
+
+    # 結果を初期化
+    result = None
+    result_2 = None
+
+    # `food_input`がある場合の処理
+    if food_input:
+        messages = [HumanMessage(content=f"{food_input}を食べました。不足する栄養素と補う食品、料理の例を教えてください。")]
+        result = chat(messages).content  # ChatGPTからの結果
+
+    # `word_input`がある場合の処理
+    if word_input:
+        print(word_input)
+        messages_2 = [HumanMessage(content=f"{word_input}")]
+        result_2 = chat(messages_2).content  # ChatGPTからの結果
+        print(result_2)
+
     # 結果を返す
-    return jsonify({"result": result.content})
+    return jsonify({
+        "result": result,    # `food_input`の結果
+        "result_2": result_2  # `word_input`の結果
+    })
+
 
 
 
