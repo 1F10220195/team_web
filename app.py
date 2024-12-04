@@ -50,10 +50,10 @@ def analyze():
 
     # `word_input`がある場合の処理
     if word_input:
-        print(word_input)
+        ###print(word_input)
         messages_2 = [HumanMessage(content=f"{word_input}")]
         result_2 = chat(messages_2).content  # ChatGPTからの結果
-        print(result_2)
+        ####print(result_2)
 
     # 結果を返す
     return jsonify({
