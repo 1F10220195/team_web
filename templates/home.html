@@ -9,9 +9,10 @@
     <h1>ようこそ！ログインしました。</h1>
     <div>
         <input type="text" id="userMessage" placeholder="質問を入力してください...">
-        <button onclick="sendMessage()">送信</button>
+        <button id="analyzeButton">送信</button>
+        <div id="result"></div>
+
     </div>
-        <div id="chatResponse"></div>
     
         <script>
             document.getElementById("analyzeButton").addEventListener("click", async () => {
