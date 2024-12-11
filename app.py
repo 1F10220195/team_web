@@ -26,7 +26,7 @@ with app.app_context():
     db.create_all()
 
 chat = ChatOpenAI(
-    openai_api_key='84Wr7FR0h14mT3k90dHAtUu7fIHdz8EgkKfnixMCg0QvOK6QcRvAlCk16mSNZtznQTTgta7AXKeCyKMzQNGZ4_g',
+    openai_api_key='IHK92nGI3dUJJiiPT0XFv_KMzS8QyOpkTqbnaBpqwHM5nSmeKmqOuIFgEGc9ItPneA4jVffl2wtguOck9Zv6Qng',
     openai_api_base='https://api.openai.iniad.org/api/v1',
     model_name='gpt-4o-mini',
     temperature=0
