@@ -96,21 +96,24 @@ def register():
             return redirect(url_for('register'))
     return render_template('register.html')
 
-# ログインページ
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error_message = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             flash('ログイン成功！')
             return redirect(url_for('home'))
         else:
-            flash('ユーザー名またはパスワードが違います。')
-    return render_template('login.html')
+            error_message = "パスワードが違います、BAKAYARO☆"
+    return render_template('login.html', error_message=error_message)
+
+
 
 # ホームページ（ログイン後）
 @app.route('/home')
