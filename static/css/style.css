@@ -5,7 +5,7 @@ body {
     padding: 20px;
 }
 
-.container {
+.container, .simple-design {
     max-width: 800px;
     margin: 0 auto;
     background-color: #fff;
@@ -14,38 +14,60 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+/* ヘッダーのスタイル */
+h1, h2, .simple-design h1 {
+    font-size: 24px;
     color: #333;
-}
-
-form {
+    text-align: center;
     margin-bottom: 20px;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-input, select {
+/* 入力フォームとボタンのスタイル */
+input[type="text"], textarea, button {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 button {
-    margin-top: 10px;
-    padding: 10px 20px;
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-#exercise-results, #meal-results {
-    margin-top: 20px;
+/* リンク */
+a {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
 }
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* レスポンス表示エリア */
+#result, #result_2 {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-wrap; /* 改行を適切に表示 */
+}
+

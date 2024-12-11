@@ -6,14 +6,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>ようこそ！ログインしました。</h1>
-    <div>
-        <input type="text" id="userMessage" placeholder="質問を入力してください...">
-        <button id="Button">送信</button>
-        <div id="result_2"></div>
-
+    <div class="simple-design">
+        <h1>ようこそ！ログインしました。</h1>
+        <div>
+            <input type="text" id="userMessage" placeholder="質問を入力してください...">
+            <button id="Button">送信</button>
+            <!-- レスポンス表示エリア -->
+            <div id="result_2"></div>
+        </div>
+        <p><a href="/health">健康管理ページに移動</a></p>
+        <p><a href="/advice">栄養素アドバイス（仮）に移動</a></p>
+        <p><a href="/logout">ログアウト</a></p>
     </div>
-    
     <script>
         document.getElementById("Button").addEventListener("click", async () => {
             const userMessage = document.getElementById("userMessage").value;
@@ -26,8 +30,5 @@
             document.getElementById("result_2").innerText = data.result_2;
         });
     </script>
-    <p><a href="/health">健康管理ページに移動</a></p>
-    <p><a href="/advice">栄養素アドバイス（仮）に移動</a></p>
-    <p><a href="/logout">ログアウト</a></p>
 </body>
 </html>
