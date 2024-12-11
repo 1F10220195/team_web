@@ -71,3 +71,38 @@ a:hover {
     white-space: pre-wrap; /* 改行を適切に表示 */
 }
 
+/* 会話エリアのスタイル */
+.conversation-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+/* メッセージ共通スタイル */
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+/* ユーザーメッセージ (右側) */
+.user-message {
+    align-self: flex-end;
+    background-color: #d1e7dd;
+    text-align: right;
+}
+
+/* AIメッセージ (左側) */
+.ai-message {
+    align-self: flex-start;
+    background-color: #f8d7da;
+    text-align: left;
+}

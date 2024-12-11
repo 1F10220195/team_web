@@ -11,9 +11,8 @@
         <div>
             <input type="text" id="userMessage" placeholder="質問を入力してください...">
             <button id="Button">送信</button>
-            <!-- レスポンス表示エリア -->
-            <div id="conversationArea">
-                <!-- 会話履歴をここに表示 -->
+            <div id="conversationArea" class="conversation-area">
+                <!-- 会話履歴を表示するエリア -->
             </div>
         </div>
         <p><a href="/health">健康管理ページに移動</a></p>
@@ -29,7 +28,7 @@
             if (!userMessage) return; // 空の入力は無視
             
             // ユーザーの入力を履歴に追加
-            conversationHistory.push({ sender: "ユーザー", message: userMessage });
+            conversationHistory.push({ sender: "user", message: userMessage });
             updateConversationArea();
             
             // サーバーにリクエストを送信
@@ -41,7 +40,7 @@
             
             // 応答を履歴に追加
             const data = await response.json();
-            conversationHistory.push({ sender: "AI", message: data.result_2 });
+            conversationHistory.push({ sender: "ai", message: data.result_2 });
             updateConversationArea();
             
             // 入力欄をクリア
@@ -51,7 +50,11 @@
         function updateConversationArea() {
             // 会話履歴をHTMLに反映
             conversationArea.innerHTML = conversationHistory
-                .map(entry => `<p><strong>${entry.sender}:</strong> ${entry.message}</p>`)
+                .map(entry => `
+                    <div class="message ${entry.sender === 'user' ? 'user-message' : 'ai-message'}">
+                        <p>${entry.message}</p>
+                    </div>
+                `)
                 .join("");
         }
     </script>
