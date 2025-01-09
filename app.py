@@ -81,6 +81,7 @@ def main():
     if request.method == 'POST':
         return redirect(url_for('register'))  # POST時に/registerにリダイレクト
     return '''
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <h1>ようこそ！</h1>
         <form action="/register" method="get">
             <button type="submit">登録ページへ</button>
