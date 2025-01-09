@@ -27,6 +27,12 @@
             <div id="exercise-results"></div>
         </section>
 
+        <div class="simple-design">
+            <h1>カロリー確認用</h1>
+            <input type="text" id="caroInput" placeholder="カロリーを確認したい料理名と量のみ記入してください。">
+            <button id="Button">送信</button>
+            <div id="result_3"></div>
+</div>
         <!-- 食事の記録フォーム -->
         <section class="meal-section">
             <h2>食事記録</h2>
@@ -52,6 +58,17 @@
 
     </div>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.getElementById("Button").addEventListener("click", async () => {
+            const caroInput = document.getElementById("caroInput").value;
+            const response = await fetch("/analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ caro_input: caroInput })
+            });
+            const data = await response.json();
+            document.getElementById("result_3").innerText = data.result_3;
+        });
+    </script>
 </body>
 </html>

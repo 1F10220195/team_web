@@ -38,10 +38,12 @@ def analyze():
     # ユーザー入力を取得
     food_input = request.json.get("food_input", "").strip()
     word_input = request.json.get("word_input", "").strip()
+    caro_input = request.json.get("caro_input", "").strip()
 
     # 結果を初期化
     result = None
     result_2 = None
+    result_3 = None
 
     # `food_input`がある場合の処理
     if food_input:
@@ -55,11 +57,20 @@ def analyze():
         result_2 = chat(messages_2).content  # ChatGPTからの結果
         ####print(result_2)
 
+
+    # `caro_input`がある場合の処理
+    if caro_input:
+        ###print(caro_input)
+        messages_3 = [HumanMessage(content=f"{caro_input}のカロリーのみを返答してください")]
+        result_3 = chat(messages_3).content  # ChatGPTからの結果
+        ####print(result_3)
+
     # 結果を返す
     return jsonify({
         "result": result,    # `food_input`の結果
-        "result_2": result_2  # `word_input`の結果
-    })
+        "result_2": result_2, # `word_input`の結果
+        "result_3": result_3  # `word_input`の結果
+        })
 
 
 
