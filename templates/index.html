@@ -12,8 +12,8 @@
         <input type="text" id="foodInput" placeholder="食べた料理を入力してください...">
         <button id="analyzeButton">解析する</button>
         <div id="result"></div>
-        <button><a href="/health">健康管理ページに移動</a></button>
-        <button><a href="{{ url_for('home') }}">ホームに戻る</a></button>
+        <a href="/health"><button>健康管理ページに移動</button></a>
+        <a href="{{ url_for('home') }}"><button>ホームに戻る</button></a>
     </div>
     <script>
         document.getElementById("analyzeButton").addEventListener("click", async () => {
